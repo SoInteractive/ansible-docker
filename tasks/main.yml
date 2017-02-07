@@ -1,0 +1,30 @@
+---
+- name: Gather variables for each operating system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+  tags:
+    - always
+
+- include: install_apt.yml
+  when: ansible_pkg_mgr == "apt"
+
+- include: install_yum.yml
+  when: ansible_pkg_mgr == "yum"
+
+- include: configure.yml
+
+- name: Enable docker service
+  service:
+    name: docker
+    state: restarted
+    enabled: yes
+
+- include: swarm.yml
+  when:
+    - docker_enable_swarm
+#    - docker_version > 1.12

@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+{
+{% if docker_directory_path != "" %}
+    "graph": "{{ docker_directory_path }}",
+{% endif %}
+    "insecure-registries": [
+{% for registry in docker_registries %}
+         {% if loop.counter != 1 %},{% endif %}"{{ registry }}"
+{% endfor %}
+    ]
+}

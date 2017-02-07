@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: Pawel Krupa
+  description: Install docker
+  company: Sointeractive
+  platforms:
+   - name: EL
+     versions:
+       - all
+   - name: Ubuntu
+     versions:
+       - 14.04
+       - 16.04
+  galaxy_tags:
+   - docker
+   - swarm
+   - containers
+
+#dependencies:
+#  - { role: username.common }
+

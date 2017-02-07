@@ -1,0 +1,7 @@
+dependency_packages:
+  - ca-certificates
+  - apt-transport-https
+
+docker_repository_path: "/etc/apt/sources.list.d/docker.list"
+
+

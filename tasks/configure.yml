@@ -1,0 +1,11 @@
+---
+- name: Create configuration directory
+  file:
+    path: /etc/docker
+    state: directory
+
+- name: Copy configuration file
+  template:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+
