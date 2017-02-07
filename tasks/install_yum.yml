@@ -1,5 +1,5 @@
 ---
-- name: add docker repository:
+- name: add docker repository
   template:
     src: docker.redhat.repo
     dest: /etc/yum.repos.d/docker-main.repo
