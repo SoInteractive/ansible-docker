@@ -21,7 +21,7 @@
 - name: Enable docker service
   service:
     name: docker
-    state: restarted
+    state: started
     enabled: yes
 
 - include: swarm.yml

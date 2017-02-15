@@ -8,4 +8,5 @@
   template:
     src: daemon.json
     dest: /etc/docker/daemon.json
+  notify: restart docker
 
