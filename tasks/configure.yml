@@ -10,3 +10,20 @@
     dest: /etc/docker/daemon.json
   notify: restart docker
 
+- name: Create custom systemd dir
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+  when: ansible_service_mgr == "systemd" and http_proxy is defined
+
+- name: Configure Proxy
+  template:
+    src: docker.systemd
+    dest: /etc/systemd/system/docker.service.d/custom.conf
+  notify: restart docker
+  register: custom_options
+  when: ansible_service_mgr == "systemd" and http_proxy is defined
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+  when: custom_options | changed
