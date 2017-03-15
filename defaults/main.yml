@@ -5,3 +5,5 @@ docker_directory_path: ""
 
 docker_registries:
   - "registry.isaacloud.com"
+
+docker_socket: "unix:///var/run/docker.sock"

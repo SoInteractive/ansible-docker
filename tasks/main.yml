@@ -28,3 +28,5 @@
   when:
     - docker_enable_swarm
 #    - docker_version > 1.12
+
+- include: metrics.yml
