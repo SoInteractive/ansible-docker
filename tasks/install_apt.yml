@@ -21,7 +21,7 @@
 
 - name: Install docker
   apt:
-    name: "{{ docker_package | default('docker-engine') }}"
+    name: "{{ docker_package | default('docker-ce') }}"
     state: present
     update_cache: yes
 
