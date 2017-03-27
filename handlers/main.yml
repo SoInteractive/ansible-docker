@@ -3,3 +3,6 @@
   service:
     name: docker
     state: restarted
+
+- name: systemd reload 
+  command: systemctl daemon-reload
