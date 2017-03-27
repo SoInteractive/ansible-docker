@@ -23,7 +23,7 @@
 #  notify: restart docker
 #  register: custom_options
 #  when: ansible_service_mgr == "systemd" and http_proxy is defined
-
-- name: Reload systemd daemon
-  command: systemctl daemon-reload
-  when: custom_options | changed
+#
+#- name: Reload systemd daemon
+#  command: systemctl daemon-reload
+#  when: custom_options | changed
