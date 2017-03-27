@@ -39,6 +39,7 @@
     name: "{{ docker_package | default('docker-ce') }}"
     state: present
     update_cache: yes 
-  notify: systemd reload
-
+  notify:
+    - systemd reload
+    - restart docker
 
