@@ -1,5 +1,5 @@
 {
-  "iptables": {{ "true" if docker_disable_iptables else "false" }},
+  "iptables": {{ "false" if docker_disable_iptables else "true" }},
 {% if docker_additional_dns != [] %}
   "dns": [
 {%  for dns in docker_additional_dns %}
