@@ -9,5 +9,4 @@ docker_registries:
 docker_socket: "unix:///var/run/docker.sock"
 
 docker_disable_iptables: false
-docker_additional_dns: []
 
