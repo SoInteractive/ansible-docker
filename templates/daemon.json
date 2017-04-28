@@ -6,7 +6,7 @@
     {% if loop.index != 1 %},{% endif %}"{{ dns }}"
 {%  endfor %}
    ],
-{% endif $}
+{% endif %}
 {% if docker_directory_path != "" %}
   "graph": "{{ docker_directory_path }}",
 {% endif %}
