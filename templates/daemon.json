@@ -1,10 +1,18 @@
 {
-{% if docker_directory_path != "" %}
-    "graph": "{{ docker_directory_path }}",
+  "iptables": {{ "false" if docker_disable_iptables else "true" }},
+{% if docker_additional_dns != [] %}
+  "dns": [
+{%  for dns in docker_additional_dns %}
+    {% if loop.index != 1 %},{% endif %}"{{ dns }}"
+{%  endfor %}
+   ],
 {% endif %}
-    "insecure-registries": [
+{% if docker_directory_path != "" %}
+  "graph": "{{ docker_directory_path }}",
+{% endif %}
+  "insecure-registries": [
 {% for registry in docker_registries %}
-         {% if loop.index != 1 %},{% endif %}"{{ registry }}"
+     {% if loop.index != 1 %},{% endif %}"{{ registry }}"
 {% endfor %}
     ]
 }

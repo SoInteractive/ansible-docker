@@ -7,3 +7,6 @@ docker_registries:
   - "registry.isaacloud.com"
 
 docker_socket: "unix:///var/run/docker.sock"
+
+docker_disable_iptables: false
+
