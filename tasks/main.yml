@@ -34,7 +34,12 @@
     name: "{{ item.name }}"
     image: "{{ item.image }}"
     state: present
-    ports: "{{ item.ports }}"
+    restart_policy: unless-stopped
+    networks: "{{ item.networks | default(omit) }}"
+    ports: "{{ item.ports | default(omit) }}"
+    volumes: "{{ item.volumes | default(omit) }}"
+    env: "{{ item.env | default(omit) }}"
+    env_file: "{{ item.env_file | default(omit) }}"
   with_items: "{{ docker_containers }}"
   when: docker_containers != []
 
