@@ -4,5 +4,5 @@
     name: docker
     state: restarted
 
-- name: systemd reload 
+- name: systemd reload
   command: systemctl daemon-reload

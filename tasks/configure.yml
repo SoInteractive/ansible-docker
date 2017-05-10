@@ -10,6 +10,13 @@
     dest: /etc/docker/daemon.json
   notify: restart docker
 
+- name: "Add {{ ansible_user_id }} to docker group"
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+  when: docker_unprivileged_access
+
 #- name: Create custom systemd dir
 #  file:
 #    path: /etc/systemd/system/docker.service.d
