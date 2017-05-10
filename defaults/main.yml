@@ -10,3 +10,7 @@ docker_socket: "unix:///var/run/docker.sock"
 
 docker_disable_iptables: false
 
+docker_containers: []
+
+docker_unprivileged_access: false
+docker_telegraf_monitoring: false

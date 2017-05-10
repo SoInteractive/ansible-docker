@@ -16,5 +16,3 @@
     createhome: no
     shell: /bin/false
     groups: docker
-
-  
