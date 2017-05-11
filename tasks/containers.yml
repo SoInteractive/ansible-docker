@@ -15,6 +15,14 @@
     - networks
   when: docker_containers != []
 
+- name: Ensure volume directories exist
+  docker_network:
+    name: "{{ item.1.split(':')[0] }}"
+  with_subelements:
+    - "{{ docker_containers }}"
+    - volumes
+  when: docker_containers != []
+
 - name: Ensure containers are started
   docker_container:
     name: "{{ item.name }}"
