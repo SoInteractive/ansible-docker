@@ -1,16 +1,24 @@
 ---
-#docker_package: "docker-engine=1.10.3-0~trusty"
+#docker_package: "docker-ce"
 
 docker_directory_path: ""
-
-docker_registries:
-  - "registry.isaacloud.com"
-
 docker_socket: "unix:///var/run/docker.sock"
-
 docker_disable_iptables: false
 
+docker_registries: []
+#docker_registries:
+#  - url: "registry.example.com"
+#    user: admin
+#    pass: password
+
 docker_containers: []
+#docker_containers:
+#  - name: nginx
+#    image: nginx
+#    ports:
+#      - "80:80"
+#    env:
+#      NGINX_PORT: 80
 
 docker_unprivileged_access: false
 docker_telegraf_monitoring: false

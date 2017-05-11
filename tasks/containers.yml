@@ -1,0 +1,31 @@
+---
+- name: Login to registry
+  docker_login:
+    registry: "{{ item.url }}"
+    username: "{{ item.user }}"
+    password: "{{ item.pass }}"
+  with_items: "{{ docker_registries }}"
+  when: docker_registries != []
+
+- name: Ensure networks existance
+  docker_network:
+    name: "{{ item.1 }}"
+  with_subelements:
+    - "{{ docker_containers }}"
+    - networks
+  when: docker_containers != []
+
+- name: Ensure containers are started
+  docker_container:
+    name: "{{ item.name }}"
+    image: "{{ item.image }}"
+    state: present
+    restart_policy: unless-stopped
+    networks: "{{ item.networks | default(omit) }}"
+    ports: "{{ item.ports | default(omit) }}"
+    volumes: "{{ item.volumes | default(omit) }}"
+    env: "{{ item.env | default(omit) }}"
+    env_file: "{{ item.env_file | default(omit) }}"
+  with_items: "{{ docker_containers }}"
+  when: docker_containers != []
+

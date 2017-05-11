@@ -3,6 +3,7 @@ galaxy_info:
   author: Pawel Krupa
   description: Install docker
   company: Sointeractive
+  min_ansible_version: 2.2
   platforms:
    - name: EL
      versions:
