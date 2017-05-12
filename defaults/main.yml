@@ -5,11 +5,16 @@ docker_directory_path: ""
 docker_socket: "unix:///var/run/docker.sock"
 docker_disable_iptables: false
 
+docker_monitoring: true
 docker_registries: []
 #docker_registries:
 #  - url: "registry.example.com"
 #    user: admin
 #    pass: password
+
+docker_volumes: []
+#docker_volumes:
+#  - /opt/volume
 
 docker_containers: []
 #docker_containers:

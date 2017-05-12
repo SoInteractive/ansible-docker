@@ -24,6 +24,8 @@
     state: started
     enabled: yes
 
+- meta: flush_handlers
+
 - include: swarm.yml
   when:
     - docker_enable_swarm
