@@ -6,7 +6,10 @@
 
 - name: Install docker
   yum:
-    name: "{{ docker_package | default('docker-ce') }}"
+    name: "{{ item }}"
     state: present
+  with_items:
+    - "{{ docker_package | default('docker-ce') }}"
+    - python-docker-py
 
 

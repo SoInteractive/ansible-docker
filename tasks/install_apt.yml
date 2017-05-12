@@ -36,9 +36,12 @@
 
 - name: Install docker
   apt:
-    name: "{{ docker_package | default('docker-ce') }}"
+    name: "{{ item }}"
     state: present
     update_cache: yes
+  with_items:
+    - python-docker
+    - "{{ docker_package | default('docker-ce') }}"
   notify:
     - systemd reload
     - restart docker

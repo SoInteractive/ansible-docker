@@ -5,7 +5,7 @@
 {%   for dns in docker_additional_dns %}
     {% if loop.index != 1 %},{% endif %}"{{ dns }}"
 {%   endfor %}
-   ],
+   ]
 {% endif %}
 {% if docker_directory_path != "" %}
   ,"graph": "{{ docker_directory_path }}",
@@ -13,7 +13,7 @@
 {% if docker_registries != [] %}
   ,"insecure-registries": [
 {%   for registry in docker_registries %}
-     {% if loop.index != 1 %},{% endif %}"{{ registry }}"
+     {% if loop.index != 1 %},{% endif %}"{{ registry.url }}"
 {%   endfor %}
     ]
 {% endif %}

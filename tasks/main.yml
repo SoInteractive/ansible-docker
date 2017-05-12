@@ -24,24 +24,14 @@
     state: started
     enabled: yes
 
+- meta: flush_handlers
+
 - include: swarm.yml
   when:
     - docker_enable_swarm
 #    - docker_version > 1.12
 
-- name: Start containers
-  docker_container:
-    name: "{{ item.name }}"
-    image: "{{ item.image }}"
-    state: present
-    restart_policy: unless-stopped
-    networks: "{{ item.networks | default(omit) }}"
-    ports: "{{ item.ports | default(omit) }}"
-    volumes: "{{ item.volumes | default(omit) }}"
-    env: "{{ item.env | default(omit) }}"
-    env_file: "{{ item.env_file | default(omit) }}"
-  with_items: "{{ docker_containers }}"
-  when: docker_containers != []
+- include: containers.yml
 
 - include: metrics.yml
   when: docker_telegraf_monitoring
