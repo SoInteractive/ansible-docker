@@ -1,4 +1,10 @@
 ---
+- name: Install dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ docker_dependencies }}"
+
 - name: add docker repository
   template:
     src: docker.redhat.repo
