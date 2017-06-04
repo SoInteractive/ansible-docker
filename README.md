@@ -1,4 +1,4 @@
-![Logo]("https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_(container_engine)_logo.png")
+![Logo](https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_(container_engine)_logo.png)
 
 Ansible Role: docker
 ====================
