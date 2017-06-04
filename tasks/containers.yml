@@ -57,4 +57,3 @@
     log_options: "{{ item.log_options | default(omit) }}"
   with_items: "{{ docker_containers }}"
   when: docker_containers != []
-

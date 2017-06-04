@@ -1,4 +1,11 @@
 ---
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ docker_dependencies }}"
+
 #- name: add specific key
 #  apt_key:
 #    keyserver: hkp://p80.pool.sks-keyservers.net:80

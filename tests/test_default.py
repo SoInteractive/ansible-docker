@@ -20,7 +20,6 @@ def test_directories(File):
 
 
 def test_files(File):
-    def test_files(File):
     present = [
         "/etc/docker/daemon.json",
     ]
@@ -29,6 +28,10 @@ def test_files(File):
             f = File(file)
             assert f.exists
             assert f.is_file
+
+
+def test_socket(Socket):
+    assert Socket("unix:///var/run/docker.sock").is_listening
 
 
 def test_service(Service):
