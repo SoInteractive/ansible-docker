@@ -11,5 +11,3 @@
   with_items:
     - "{{ docker_package | default('docker-ce') }}"
     - python-docker-py
-
-

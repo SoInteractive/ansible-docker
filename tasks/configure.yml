@@ -23,7 +23,7 @@
 #    state: directory
 #  when: ansible_service_mgr == "systemd" and http_proxy is defined
 #
-#- name: Configure Proxy
+#- name: Configure docker service
 #  template:
 #    src: docker.systemd
 #    dest: /etc/systemd/system/docker.service.d/custom.conf

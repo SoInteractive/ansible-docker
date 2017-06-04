@@ -32,6 +32,3 @@
 #    - docker_version > 1.12
 
 - include: containers.yml
-
-- include: metrics.yml
-  when: docker_telegraf_monitoring

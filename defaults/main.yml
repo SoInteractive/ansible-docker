@@ -26,4 +26,3 @@ docker_containers: []
 #      NGINX_PORT: 80
 
 docker_unprivileged_access: false
-docker_telegraf_monitoring: false

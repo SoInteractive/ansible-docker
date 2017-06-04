@@ -43,6 +43,4 @@
     - python-docker
     - "{{ docker_package | default('docker-ce') }}"
   notify:
-    - systemd reload
     - restart docker
-
