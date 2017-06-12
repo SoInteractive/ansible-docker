@@ -41,7 +41,7 @@
       - /opt/portainer:/data
       - "{{ docker_local_socket | replace('unix://','') }}:/var/run/docker.sock"
     command:       
-      - "--admin-password \'{{ portainer_pass.stdout_lines[0] | replace('admin:','') }}\'"
+      - "--admin-password '{{ portainer_pass.stdout_lines[0] | replace('admin:','') }}'"
 #      - "--admin-password \'{{ portainer_pass.content | b64decode | replace('admin:','') | replace('\n','')}}\'"
 #      - "--admin-password \'{{ docker_portainer_pass | password_hash('bcrypt') }}\'"
       - "--external-endpoints /data/endpoints.json"
