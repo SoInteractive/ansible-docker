@@ -1,0 +1,47 @@
+---
+- name: Ensure portainer data directory exists
+  file:
+    path: /opt/portainer
+    state: directory
+
+- name: Create portainer endpoint JSON file
+  template:
+    src: portainer_endpoints.json.j2
+    dest: /opt/portainer/endpoints.json
+
+# password_hash generates only empty string :(
+- name: Generate password
+  become: no
+  command: "htpasswd -nbB admin {{ docker_portainer_pass }}"
+  register: portainer_pass
+  delegate_to: localhost
+  run_once: true
+
+#- name: Generate password
+#  htpasswd:
+#    path: /opt/portainer/user
+#    name: admin
+#    password: "{{ docker_portainer_pass }}"
+#    crypt_scheme: bcrypt
+#    mode: 0600
+#
+#- name: Get password
+#  slurp:
+#    src: /opt/portainer/user
+#  register: portainer_pass
+
+- name: Ensure portainer is started
+  docker_container:
+    name: portainer
+    image: portainer/portainer:latest
+    memory: 512m
+    ports:
+      - 7000:9000
+    volumes:
+      - /opt/portainer:/data
+      - "{{ docker_local_socket | replace('unix://','') }}:/var/run/docker.sock"
+    command:       
+      - "--admin-password \'{{ portainer_pass.stdout_lines[0] | replace('admin:','') }}\'"
+#      - "--admin-password \'{{ portainer_pass.content | b64decode | replace('admin:','') | replace('\n','')}}\'"
+#      - "--admin-password \'{{ docker_portainer_pass | password_hash('bcrypt') }}\'"
+      - "--external-endpoints /data/endpoints.json"
