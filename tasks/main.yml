@@ -18,6 +18,8 @@
 
 - include: configure.yml
 
+- meta: flush_handlers
+
 - name: Enable docker service
   service:
     name: docker
