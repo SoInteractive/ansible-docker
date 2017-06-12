@@ -32,3 +32,6 @@
 #    - docker_version > 1.12
 
 - include: containers.yml
+
+- include: portainer.yml
+  when: docker_portainer_pass != ""

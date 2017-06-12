@@ -4,5 +4,5 @@ docker_repository_path: "/etc/apt/sources.list.d/docker.list"
 docker_dependencies:
   - apt-transport-https
   - ca-certificates
-  - curl
   - software-properties-common
+  - python-docker
