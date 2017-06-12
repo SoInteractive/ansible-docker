@@ -2,7 +2,9 @@
 #docker_package: "docker-ce"
 
 docker_directory_path: ""
-docker_socket: "unix:///var/run/docker.sock"
+docker_local_socket: "unix:///var/run/docker.sock"
+docker_remote_socket: ""
+#docker_remote_socket: "tcp://{{ ansible_default_ipv4 }}:2375"
 docker_disable_iptables: false
 
 docker_monitoring: true

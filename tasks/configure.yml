@@ -17,20 +17,13 @@
     append: yes
   when: docker_unprivileged_access
 
-#- name: Create custom systemd dir
-#  file:
-#    path: /etc/systemd/system/docker.service.d
-#    state: directory
-#  when: ansible_service_mgr == "systemd" and http_proxy is defined
-#
-#- name: Configure docker service
-#  template:
-#    src: docker.systemd
-#    dest: /etc/systemd/system/docker.service.d/custom.conf
-#  notify: restart docker
-#  register: custom_options
-#  when: ansible_service_mgr == "systemd" and http_proxy is defined
-#
-#- name: Reload systemd daemon
-#  command: systemctl daemon-reload
-#  when: custom_options | changed
+- name: Configure docker service
+  template:
+    src: docker.systemd
+    dest: /etc/systemd/system/docker.service
+  notify:
+    - systemd reload
+    - restart docker
+  register: custom_options
+  when: ansible_service_mgr == "systemd"
+
