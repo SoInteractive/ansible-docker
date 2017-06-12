@@ -18,13 +18,13 @@
 
 - include: configure.yml
 
+- meta: flush_handlers
+
 - name: Enable docker service
   service:
     name: docker
     state: started
     enabled: yes
-
-- meta: flush_handlers
 
 - include: swarm.yml
   when:
