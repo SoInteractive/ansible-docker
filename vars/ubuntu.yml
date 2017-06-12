@@ -6,4 +6,3 @@ docker_dependencies:
   - ca-certificates
   - curl
   - software-properties-common
-  - docker-py

@@ -3,7 +3,7 @@ galaxy_info:
   author: Pawel Krupa
   description: Install docker and manage containers
   company: Sointeractive
-  min_ansible_version: 2.2
+  min_ansible_version: 2.3
   license: MIT
   platforms:
 #   - name: EL

@@ -6,7 +6,7 @@
 
 - name: Copy configuration file
   template:
-    src: daemon.json
+    src: daemon.json.j2
     dest: /etc/docker/daemon.json
   notify: restart docker
 
@@ -19,11 +19,10 @@
 
 - name: Configure docker service
   template:
-    src: docker.systemd
+    src: docker.service.j2
     dest: /etc/systemd/system/docker.service
   notify:
     - systemd reload
     - restart docker
   register: custom_options
   when: ansible_service_mgr == "systemd"
-

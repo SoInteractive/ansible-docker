@@ -7,7 +7,7 @@
 
 - name: add docker repository
   template:
-    src: docker.redhat.repo
+    src: docker.redhat.repo.j2
     dest: /etc/yum.repos.d/docker-main.repo
 
 - name: Install docker
