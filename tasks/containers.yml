@@ -47,6 +47,7 @@
     image: "{{ item.image }}"
     state: started
     restart_policy: unless-stopped
+    labels: "{{ item.labels | default(omit) }}"
     networks: "{{ item.networks | default(omit) }}"
     ports: "{{ item.ports | default(omit) }}"
     volumes: "{{ item.volumes | default(omit) }}"
