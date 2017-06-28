@@ -12,26 +12,45 @@
 
 - include: install_apt.yml
   when: ansible_pkg_mgr == "apt"
+  tags:
+    - install
 
 - include: install_yum.yml
   when: ansible_pkg_mgr == "yum"
+  tags:
+    - install
 
 - include: configure.yml
+  tags:
+    - configure
+    - install
 
 - meta: flush_handlers
+  tags:
+    - install
+    - configure
 
 - name: Enable docker service
   service:
     name: docker
     state: started
     enabled: yes
+  tags:
+    - install
+    - configure
 
 - include: swarm.yml
   when:
     - docker_enable_swarm
 #    - docker_version > 1.12
+  tags:
+    - install
+    - configure
+    - swarm
 
 - include: containers.yml
+  tags:
+    - containers
 
 - include: portainer.yml
   when: docker_portainer_pass != ""
