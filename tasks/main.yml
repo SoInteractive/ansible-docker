@@ -10,28 +10,28 @@
   tags:
     - always
 
-- include: install_apt.yml
-  when: ansible_pkg_mgr == "apt"
+#- include: install_apt.yml
+#  when: ansible_pkg_mgr == "apt"
 
-- include: install_yum.yml
-  when: ansible_pkg_mgr == "yum"
+#- include: install_yum.yml
+#  when: ansible_pkg_mgr == "yum"
 
-- include: configure.yml
+#- include: configure.yml
 
-- meta: flush_handlers
+#- meta: flush_handlers
 
-- name: Enable docker service
-  service:
-    name: docker
-    state: started
-    enabled: yes
+#- name: Enable docker service
+#  service:
+#    name: docker
+#    state: started
+#    enabled: yes
 
 - include: swarm.yml
   when:
     - docker_swarm_enable
 #    - docker_version > 1.12
 
-- include: containers.yml
+#- include: containers.yml
 
-- include: portainer.yml
-  when: docker_portainer_pass != ""
+#- include: portainer.yml
+#  when: docker_portainer_pass != ""

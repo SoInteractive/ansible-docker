@@ -3,6 +3,7 @@
   command: "docker info"
   register: "docker_info"
   changed_when: false
+
 - name: Docker Swarm initalization
   command: >
            docker swarm init
@@ -11,37 +12,43 @@
   when:
     - '"Swarm: inactive" in docker_info.stdout'
     - inventory_hostname == docker_swarm_primary_manager
+
 - name: Capturing Docker Swarm worker join token
   command: "docker swarm join-token -q worker"
   changed_when: false
   register: "docker_swarm_worker_token"
   when: inventory_hostname == docker_swarm_primary_manager
+
 - name: Capturing Docker Swarm manager join token
   command: "docker swarm join-token -q manager"
   changed_when: false
   register: "docker_swarm_manager_token"
   when: inventory_hostname == docker_swarm_primary_manager
+
 - name: Defining Docker Swarm manager address
   set_fact:
     docker_swarm_manager_address: "{{ docker_swarm_address }}:{{ docker_swarm_port }}"
   changed_when: false
   when: inventory_hostname == docker_swarm_primary_manager
+
 - name: Defining Docker Swarm manager address
   set_fact:
     docker_swarm_manager_address: "{{ hostvars[docker_swarm_primary_manager]['docker_swarm_manager_address'] }}"
   changed_when: false
   when: inventory_hostname != docker_swarm_primary_manager
+
 - name: Defining Docker Swarm manager join token
   set_fact:
     docker_swarm_manager_token: "{{ hostvars[docker_swarm_primary_manager]['docker_swarm_manager_token'] }}"
   changed_when: false
   when: inventory_hostname != docker_swarm_primary_manager
+
 - name: Defining Docker Swarm worker join token
   set_fact:
     docker_swarm_worker_token: "{{ hostvars[docker_swarm_primary_manager]['docker_swarm_worker_token'] }}"
   changed_when: false
-  when: >
-        inventory_hostname != docker_swarm_primary_manager
+  when: inventory_hostname != docker_swarm_primary_manager
+
 - name: Joining additional Docker Swarm managers to cluster
   command: >
            docker swarm join
@@ -54,6 +61,7 @@
     - inventory_hostname not in groups['docker-swarm-workers']
     - '"Swarm: active" not in docker_info.stdout'
     - '"Swarm: pending" not in docker_info.stdout'
+
 - name: Joining Docker Swarm workers to cluster
   command: >
            docker swarm join
