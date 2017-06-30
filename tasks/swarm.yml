@@ -30,7 +30,7 @@
   command: >
            docker swarm join
            --listen-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}:{{ docker_swarm_port }}
-           --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }} 
+           --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
            --token {{ docker_swarm_manager_token.stdout }}
            {{ hostvars[docker_swarm_primary_manager]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
   when:
@@ -46,7 +46,7 @@
            --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
            --token {{ docker_swarm_worker_token.stdout }}
            {{ hostvars[docker_swarm_primary_manager]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
-  when: 
+  when:
     - inventory_hostname in groups['docker-swarm-workers']
     - '"Swarm: active" not in docker_info.stdout'
     - '"Swarm: pending" not in docker_info.stdout'
