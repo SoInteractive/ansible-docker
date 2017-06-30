@@ -34,7 +34,4 @@ docker_portainer_pass: ""
 docker_swarm_enable: false
 docker_swarm_interface: "enp0s8"
 docker_swarm_primary_manager: "{{ hostvars[inventory_hostname]['groups']['docker-swarm-managers'][0] }}"
-#docker_swarm_primary_manager: "{{ hostvars[groups['docker-swarm-managers'][0]['inventory_hostname']] }}"
-docker_swarm_address: "{{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}"
-#docker_swarm_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
 docker_swarm_port: "2377"
