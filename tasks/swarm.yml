@@ -1,19 +1,29 @@
 ---
+- name: Checking
+  fail:
+    msg: Cannot initialize Docker Swarm cluster
+  when: >
+    groups[docker_hosts_group] | length == 1 or
+    groups[docker_swarm_managers_group] | length is even
+  run_once: yes
+
 - name: Checking Docker Swarm mode status
   command: "docker info"
   register: "docker_info"
   changed_when: false
 
-- name: Docker Swarm initalization
-  command: >
-           docker swarm init
-           --listen-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}:{{ docker_swarm_port }}
-           --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
-  when: '"Swarm: inactive" in docker_info.stdout'
-  run_once: yes
-  delegate_to: "{{ docker_swarm_primary_manager }}"
+- name: Docker Swarm getting primary manager
+  set_fact:
+    docker_swarm_primary_manager: "{{ hostvars[groups[docker_swarm_managers_group][0]]['inventory_hostname'] }}"
 
 - block:
+  - name: Docker Swarm initalization
+    command: >
+             docker swarm init
+             --listen-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}:{{ docker_swarm_port }}
+             --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
+    when: '"Swarm: inactive" in docker_info.stdout'
+
   - name: Capturing Docker Swarm worker join token
     command: "docker swarm join-token -q worker"
     changed_when: false
@@ -35,7 +45,7 @@
            {{ hostvars[docker_swarm_primary_manager]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
   when:
     - inventory_hostname != docker_swarm_primary_manager
-    - inventory_hostname not in groups['docker-swarm-workers']
+    - inventory_hostname in groups[docker_swarm_managers_group]
     - '"Swarm: active" not in docker_info.stdout'
     - '"Swarm: pending" not in docker_info.stdout'
 
@@ -47,6 +57,6 @@
            --token {{ docker_swarm_worker_token.stdout }}
            {{ hostvars[docker_swarm_primary_manager]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
   when:
-    - inventory_hostname in groups['docker-swarm-workers']
+    - inventory_hostname not in groups[docker_swarm_managers_group]
     - '"Swarm: active" not in docker_info.stdout'
     - '"Swarm: pending" not in docker_info.stdout'
