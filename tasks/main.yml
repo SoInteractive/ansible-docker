@@ -41,7 +41,7 @@
 
 - include: swarm.yml
   when:
-    - docker_enable_swarm
+    - docker_swarm_enable
 #    - docker_version > 1.12
   tags:
     - install
