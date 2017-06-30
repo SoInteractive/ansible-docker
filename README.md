@@ -25,5 +25,4 @@ that can be overridden.
 
 TODO:
 -----
-* creating docker-swarm in docker > 1.12.
 * centos 7 support
