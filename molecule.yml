@@ -7,7 +7,10 @@ verifier:
   name: testinfra
 docker:
   containers:
-    - name: docker-ubuntu
-      image: solita/ubuntu-systemd
-      image_version: 16.04
-      privileged: yes
+    - name: docker-xenial
+      image: ubuntu
+      image_version: xenial
+    - name: docker-centos
+      image: centos/systemd
+      image_version: latest
+      privileged: true
