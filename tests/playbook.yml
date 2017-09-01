@@ -2,7 +2,7 @@
 - hosts: all
   pre_tasks:
     - name: Install testing tools
-      apt:
+      package:
         name: net-tools
         state: present
   roles:
