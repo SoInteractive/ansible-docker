@@ -37,7 +37,7 @@
     image: portainer/portainer:1.14.0
     memory: 512m
     ports:
-      - 7000:9000
+      - 127.0.0.1:7000:9000
     volumes:
       - /opt/portainer:/data
       - "{{ docker_local_socket | replace('unix://','') }}:/var/run/docker.sock"
