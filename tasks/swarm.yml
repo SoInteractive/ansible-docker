@@ -1,3 +1,62 @@
 ---
-# TODO
-# https://www.digitalocean.com/community/tutorials/how-to-create-a-cluster-of-docker-containers-with-docker-swarm-and-digitalocean-on-ubuntu-16-04
+- name: Checking
+  fail:
+    msg: Cannot initialize Docker Swarm cluster
+  when: >
+    groups[docker_hosts_group] | length == 1 or
+    groups[docker_swarm_managers_group] | length is even
+  run_once: yes
+
+- name: Checking Docker Swarm mode status
+  command: "docker info"
+  register: "docker_info"
+  changed_when: false
+
+- name: Docker Swarm getting primary manager
+  set_fact:
+    docker_swarm_primary_manager: "{{ hostvars[groups[docker_swarm_managers_group][0]]['inventory_hostname'] }}"
+
+- block:
+  - name: Docker Swarm initalization
+    command: >
+             docker swarm init
+             --listen-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}:{{ docker_swarm_port }}
+             --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
+    when: '"Swarm: inactive" in docker_info.stdout'
+
+  - name: Capturing Docker Swarm worker join token
+    command: "docker swarm join-token -q worker"
+    changed_when: false
+    register: "docker_swarm_worker_token"
+
+  - name: Capturing Docker Swarm manager join token
+    command: "docker swarm join-token -q manager"
+    changed_when: false
+    register: "docker_swarm_manager_token"
+  run_once: yes
+  delegate_to: "{{ docker_swarm_primary_manager }}"
+
+- name: Joining additional Docker Swarm managers to cluster
+  command: >
+           docker swarm join
+           --listen-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}:{{ docker_swarm_port }}
+           --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
+           --token {{ docker_swarm_manager_token.stdout }}
+           {{ hostvars[docker_swarm_primary_manager]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
+  when:
+    - inventory_hostname != docker_swarm_primary_manager
+    - inventory_hostname in groups[docker_swarm_managers_group]
+    - '"Swarm: active" not in docker_info.stdout'
+    - '"Swarm: pending" not in docker_info.stdout'
+
+- name: Joining Docker Swarm workers to cluster
+  command: >
+           docker swarm join
+           --listen-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}:{{ docker_swarm_port }}
+           --advertise-addr {{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
+           --token {{ docker_swarm_worker_token.stdout }}
+           {{ hostvars[docker_swarm_primary_manager]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}
+  when:
+    - inventory_hostname not in groups[docker_swarm_managers_group]
+    - '"Swarm: active" not in docker_info.stdout'
+    - '"Swarm: pending" not in docker_info.stdout'

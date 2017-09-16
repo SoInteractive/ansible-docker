@@ -1,0 +1,17 @@
+[
+{
+  "Name": "{{ inventory_hostname }}",
+  "URL": "{{ docker_local_socket }}"
+}
+{% for h in groups[docker_hosts_group] %}
+{%   if h != inventory_hostname and hostvars[h]['docker_remote_socket'] != "" %}
+{%     if hostvars[h]['docker_remote_socket'].split(':')[1].replace('//','') | ipaddr %}  
+,
+{
+  "Name": "{{ hostvars[h]['inventory_hostname'] }}",
+  "URL": "{{ hostvars[h]['docker_remote_socket'] }}"
+}
+{%     endif %}
+{%   endif %}
+{% endfor %}
+]

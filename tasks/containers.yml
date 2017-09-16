@@ -47,8 +47,10 @@
     image: "{{ item.image }}"
     state: started
     restart_policy: unless-stopped
+    labels: "{{ item.labels | default(omit) }}"
     networks: "{{ item.networks | default(omit) }}"
     ports: "{{ item.ports | default(omit) }}"
+    etc_hosts: "{{ item.extra_hosts | default(omit) }}"
     volumes: "{{ item.volumes | default(omit) }}"
     env: "{{ item.env | default(omit) }}"
     env_file: "{{ item.env_file | default(omit) }}"
@@ -57,4 +59,3 @@
     log_options: "{{ item.log_options | default(omit) }}"
   with_items: "{{ docker_containers }}"
   when: docker_containers != []
-

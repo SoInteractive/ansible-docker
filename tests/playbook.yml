@@ -1,4 +1,11 @@
 ---
 - hosts: all
+  pre_tasks:
+    - name: Install testing tools
+      package:
+        name: net-tools
+        state: present
   roles:
     - docker
+  vars:
+    docker_monitoring: false

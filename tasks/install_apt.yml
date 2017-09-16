@@ -1,4 +1,11 @@
 ---
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ docker_dependencies }}"
+
 #- name: add specific key
 #  apt_key:
 #    keyserver: hkp://p80.pool.sks-keyservers.net:80
@@ -22,7 +29,7 @@
 
 - name: add docker repository
   template:
-    src: docker.ubuntu.repo
+    src: docker.ubuntu.repo.j2
     dest: /etc/apt/sources.list.d/docker.list
 
 - name: Purge old versions
@@ -36,11 +43,8 @@
 
 - name: Install docker
   apt:
-    name: "{{ item }}"
+    name: "{{ docker_package | default('docker-ce') }}"
     state: present
     update_cache: yes
-  with_items:
-    - python-docker
-    - "{{ docker_package | default('docker-ce') }}"
   notify:
     - restart docker

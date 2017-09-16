@@ -1,8 +1,11 @@
 ---
+docker_hosts_group: docker
 #docker_package: "docker-ce"
 
 docker_directory_path: ""
-docker_socket: "unix:///var/run/docker.sock"
+docker_local_socket: "unix:///var/run/docker.sock"
+docker_remote_socket: ""
+#docker_remote_socket: "tcp://{{ ansible_default_ipv4.address }}:2375"
 docker_disable_iptables: false
 
 docker_monitoring: true
@@ -26,3 +29,9 @@ docker_containers: []
 #      NGINX_PORT: 80
 
 docker_unprivileged_access: false
+docker_portainer_pass: ""
+
+docker_swarm_enable: false
+docker_swarm_interface: "{{ ansible_default_ipv4.interface }}"
+docker_swarm_managers_group: "docker-swarm-managers"
+docker_swarm_port: "2377"
