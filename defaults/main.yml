@@ -6,7 +6,6 @@ docker_directory_path: ""
 docker_local_socket: "unix:///var/run/docker.sock"
 docker_remote_socket: ""
 #docker_remote_socket: "tcp://{{ ansible_default_ipv4.address }}:2375"
-docker_disable_iptables: false
 
 docker_monitoring: true
 docker_registries: []
@@ -35,3 +34,9 @@ docker_swarm_enable: false
 docker_swarm_interface: "{{ ansible_default_ipv4.interface }}"
 docker_swarm_managers_group: "docker-swarm-managers"
 docker_swarm_port: "2377"
+
+docker_configuration:
+  iptables: false
+  dns: "{{ ansible_dns.nameservers | difference(['127.0.0.1', '127.0.1.1']) }}"
+  data-root: "{{ docker_directory_path | default(omit) }}"
+  insecure-registries: "{{ docker_registries | map(attribute='url') | list | default(omit) }}"
