@@ -1,0 +1,21 @@
+---
+- name: Set docker data location
+  set_fact:
+    data_dir: "{{ docker_directory_path if docker_directory_path != "" else /var/lib/docker/ }}"
+  
+- name: Ensure cAdvisor is started
+  docker_container:
+    name: cadvisor
+    image: google/cadvisor:latest
+    memory: 512m
+    ports:
+      - 8080:8080
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "{{ data_dir }}:/var/lib/docker:ro"
+    log_driver: syslog
+    log_options:
+      syslog-facility: local0
+      tag: cadvisor
