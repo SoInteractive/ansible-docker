@@ -3,11 +3,12 @@
   package:
     name: "{{ item }}"
     state: present
+  retries: 2
   with_items: "{{ docker_dependencies }}"
 
 - name: Install docker-compose
   pip:
-    name: docker-compose
+    name: docker-compose==1.15.0
     state: present
 
 - block:
@@ -26,12 +27,12 @@
     become: no
     run_once: true
     delegate_to: localhost
-  
+
   - name: add GPG key
     apt_key:
       data: "{{ lookup('file', '/tmp/docker.gpg') }}"
       state: present
-  
+
   - name: add docker repository
     template:
       src: docker.ubuntu.repo.j2
@@ -44,11 +45,10 @@
     dest: /etc/yum.repos.d/docker-main.repo
   when: ansible_pkg_mgr == "yum"
 
-- name: Purge old versions
+- name: Remove old versions
   package:
     name: "{{ item }}"
     state: absent
-    purge: true
   with_items:
     - lxc-docker
     - docker-engine
