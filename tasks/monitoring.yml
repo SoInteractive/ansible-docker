@@ -1,8 +1,8 @@
 ---
 - name: Set docker data location
   set_fact:
-    data_dir: "{{ docker_directory_path if docker_directory_path != "" else /var/lib/docker/ }}"
-  
+    data_dir: "{{ docker_directory_path if docker_directory_path != '' else /var/lib/docker/ }}"
+
 - name: Ensure cAdvisor is started
   docker_container:
     name: cadvisor

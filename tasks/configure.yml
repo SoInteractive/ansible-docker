@@ -15,7 +15,7 @@
     name: "{{ item }}"
     groups: docker
     append: yes
-  with: docker_users
+  with_items: "{{ docker_users }}"
 
 - name: Configure docker service
   template:
