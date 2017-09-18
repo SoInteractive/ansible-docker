@@ -15,36 +15,32 @@
     - install
 
 - include: configure.yml
-  tags:
-    - configure
-    - install
 
 - meta: flush_handlers
-  tags:
-    - install
-    - configure
 
 - name: Enable docker service
   service:
     name: docker
     state: started
     enabled: yes
-  tags:
-    - install
-    - configure
+
+- name: Login to registry
+  docker_login:
+    registry: "{{ item.url }}"
+    username: "{{ item.user }}"
+    password: "{{ item.pass }}"
+  with_items: "{{ docker_registries }}"
+  when: docker_registries != []
 
 - include: swarm.yml
   when:
     - docker_swarm_enable
 #    - docker_version > 1.12
-  tags:
-    - install
-    - configure
-    - swarm
 
-- include: containers.yml
-  tags:
-    - containers
+- include: monitoring.yml
+  when: docker_monitoring
 
 - include: portainer.yml
+  run_once: yes
+  delegate_to: "{{ groups[docker_hosts_group][0] }}" 
   when: docker_portainer_pass != ""

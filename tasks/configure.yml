@@ -10,12 +10,12 @@
     dest: /etc/docker/daemon.json
   notify: restart docker
 
-- name: "Add {{ ansible_user_id }} to docker group"
+- name: Add privileged users to docker group
   user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ item }}"
     groups: docker
     append: yes
-  when: docker_unprivileged_access
+  with: docker_users
 
 - name: Configure docker service
   template:
