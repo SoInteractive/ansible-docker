@@ -2,6 +2,9 @@
 docker_hosts_group: docker
 #docker_package: "docker-ce"
 
+docker_users:
+  - "{{ ansible_env['SUDO_USER'] | default(ansible_user_id) }}"
+
 docker_directory_path: ""
 docker_local_socket: "unix:///var/run/docker.sock"
 docker_remote_socket: ""
@@ -16,6 +19,7 @@ docker_registries: []
 #    pass: password
 
 docker_unprivileged_access: false
+
 docker_portainer_pass: ""
 
 docker_swarm_enable: false
