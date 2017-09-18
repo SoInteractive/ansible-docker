@@ -10,11 +10,9 @@
   tags:
     - always
 
-- include: install_apt.yml
-  when: ansible_pkg_mgr == "apt"
-
-- include: install_yum.yml
-  when: ansible_pkg_mgr == "yum"
+- include: install.yml
+  tags:
+    - install
 
 - include: configure.yml
 
