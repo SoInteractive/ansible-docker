@@ -1,5 +1,5 @@
 ---
-docker_additional_dns: "{{ ansible_dns.nameservers | difference(['127.0.0.1', '127.0.1.1']) }}"
+docker_repository_path: "/etc/apt/sources.list.d/docker.list"
 docker_dependencies:
   - apt-transport-https
   - ca-certificates
