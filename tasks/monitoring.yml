@@ -1,4 +1,4 @@
---_
+---
 - name: Ensure cAdvisor is started
   docker_container:
     name: cadvisor
