@@ -5,7 +5,7 @@ docker_hosts_group: docker
 docker_users:
   - "{{ ansible_env['SUDO_USER'] | default(ansible_user_id) }}"
 
-docker_directory_path: ""
+docker_directory_path: "/var/lib/docker"
 docker_local_socket: "unix:///var/run/docker.sock"
 docker_remote_socket: ""
 #docker_remote_socket: "tcp://{{ ansible_default_ipv4.address }}:2375"
@@ -27,7 +27,7 @@ docker_swarm_managers_group: "docker-swarm-managers"
 docker_swarm_port: "2377"
 
 docker_configuration:
-  iptables: false
+  iptables: true
   dns: "{{ ansible_dns.nameservers | difference(['127.0.0.1', '127.0.1.1']) }}"
-  data-root: "{{ docker_directory_path | default(omit) }}"
+  data-root: "{{ docker_directory_path }}"
   insecure-registries: "{{ docker_registries | map(attribute='url') | list | default(omit) }}"
