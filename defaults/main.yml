@@ -20,6 +20,8 @@ docker_registries: []
 docker_unprivileged_access: false
 
 docker_portainer_pass: ""
+docker_portainer_address: "127.0.0.1"
+docker_portainer_port: 7000
 
 docker_swarm_enable: false
 docker_swarm_interface: "{{ ansible_default_ipv4.interface }}"

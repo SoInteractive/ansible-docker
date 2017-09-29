@@ -6,6 +6,16 @@
   retries: 2
   with_items: "{{ docker_dependencies }}"
 
+- name: Remove deprecated system-wide libs
+  package:
+    name: python-docker
+    state: absent
+
+- name: Remove deprecated python libs
+  pip:
+    name: docker-py
+    state: absent
+
 - name: Install docker-compose
   pip:
     name: docker-compose==1.15.0
