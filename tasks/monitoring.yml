@@ -11,6 +11,7 @@
       - "/var/run:/var/run:rw"
       - "/sys:/sys:ro"
       - "{{ docker_directory_path }}:/var/lib/docker:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     log_driver: syslog
     log_options:
       syslog-facility: local0
