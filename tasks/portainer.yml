@@ -12,6 +12,7 @@
 # password_hash generates only empty string :(
 - name: Generate password
   become: no
+  no_log: True
   command: "htpasswd -nbB admin {{ docker_portainer_pass }}"
   register: portainer_pass
   delegate_to: localhost
