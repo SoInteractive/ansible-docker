@@ -22,7 +22,7 @@
     src: docker.service.j2
     dest: /etc/systemd/system/docker.service
   notify:
-    - systemd reload
+    - reload systemd
     - restart docker
   register: custom_options
   when: ansible_service_mgr == "systemd"
