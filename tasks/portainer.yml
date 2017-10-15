@@ -34,7 +34,7 @@
 - name: Ensure portainer is started
   docker_container:
     name: portainer
-    image: portainer/portainer:1.14.0
+    image: portainer/portainer:1.15.0
     memory: 512m
     ports:
       - "{{ docker_portainer_address }}:{{ docker_portainer_port }}:9000"
