@@ -30,6 +30,7 @@
     username: "{{ item.user }}"
     password: "{{ item.pass }}"
   with_items: "{{ docker_registries }}"
+  no_log: True
   when: docker_registries != []
 
 - include: swarm.yml
