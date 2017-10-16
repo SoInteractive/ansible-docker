@@ -6,6 +6,6 @@
         name: net-tools
         state: present
   roles:
-    - docker
+    - ansible-docker
   vars:
     docker_monitoring: false
