@@ -24,6 +24,15 @@
     state: started
     enabled: yes
 
+- name: Restrict docker access to specific subnet
+  iptables:
+    chain: DOCKER
+    action: insert
+    protocol: tcp
+    source: "! {{ docker_allow_subnet }}"
+    jump: DROP
+  when: docker_allow_subnet != ""
+
 - name: Login to registry
   docker_login:
     registry: "{{ item.url }}"
