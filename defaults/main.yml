@@ -17,8 +17,6 @@ docker_registries: []
 #    user: admin
 #    pass: password
 
-docker_allow_subnet: ""
-
 docker_portainer_pass: ""
 docker_portainer_address: "127.0.0.1"
 docker_portainer_port: 7000
