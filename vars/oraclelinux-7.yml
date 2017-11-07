@@ -1,0 +1,6 @@
+docker_package: "docker-engine"
+docker_additional_dns: "{{ ansible_dns.nameservers | difference(['127.0.0.1', '127.0.1.1']) }}"
+docker_dependencies:
+  - "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+  - "e2fsprogs"
+  - python2-pip

@@ -15,3 +15,7 @@ docker:
       image: centos/systemd
       image_version: latest
       privileged: true
+    - name: docker-oracle
+      image: sirkkalap/oraclelinux-systemd
+      image_version: latest
+      privileged: true

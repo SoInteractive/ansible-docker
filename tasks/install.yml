@@ -43,17 +43,23 @@
       data: "{{ lookup('file', '/tmp/docker.gpg') }}"
       state: present
 
-  - name: add docker repository
+  - name: add docker repository | Debian
     template:
       src: docker.ubuntu.repo.j2
       dest: /etc/apt/sources.list.d/docker.list
-  when: ansible_pkg_mgr == "apt"
+  when: ansible_os_family == "Debian"
 
-- name: add docker repository
+- name: add docker repository | RedHat
   template:
     src: docker.redhat.repo.j2
     dest: /etc/yum.repos.d/docker-main.repo
-  when: ansible_pkg_mgr == "yum"
+  when: ansible_os_family == "RedHat" and ansible_distribution != "OracleLinux"
+
+- name: add docker repository | OracleLinux
+  template:
+    src: docker.oracle.repo.j2
+    dest: /etc/yum.repos.d/ol7-additional.repo
+  when: ansible_distribution == "OracleLinux"
 
 - name: Remove old versions
   package:
@@ -62,6 +68,7 @@
   with_items:
     - lxc-docker
     - docker-engine
+  when: ansible_distribution != "OracleLinux"
 
 - name: Install docker
   package:
