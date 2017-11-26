@@ -10,7 +10,7 @@ docker_local_socket: "unix:///var/run/docker.sock"
 docker_remote_socket: ""
 #docker_remote_socket: "tcp://{{ ansible_default_ipv4.address }}:2375"
 
-docker_monitoring: true
+docker_metrics: true
 docker_registries: []
 #docker_registries:
 #  - url: "registry.example.com"
