@@ -3,6 +3,7 @@
   docker_container:
     name: cadvisor
     image: google/cadvisor:latest
+    restart: always
     memory: 512m
     ports:
       - 8080:8080
