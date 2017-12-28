@@ -3,7 +3,7 @@
   "Name": "{{ inventory_hostname }}",
   "URL": "{{ docker_local_socket }}"
 }
-{% for h in groups[docker_hosts_group] %}
+{% for h in ansible_play_hosts %}
 {%   if h != inventory_hostname and hostvars[h]['docker_remote_socket'] != "" %}
 {%     if hostvars[h]['docker_remote_socket'].split(':')[1].replace('//','') | ipaddr %}  
 ,

@@ -43,5 +43,5 @@
 
 - include: portainer.yml
   run_once: yes
-  delegate_to: "{{ groups[docker_hosts_group][0] }}"
+  delegate_to: "{{ ansible_play_hosts[0] }}"
   when: docker_portainer_pass != ""
