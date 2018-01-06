@@ -3,7 +3,7 @@
   fail:
     msg: Cannot initialize Docker Swarm cluster
   when: >
-    groups[docker_hosts_group] | length == 1 or
+    ansible_play_hosts | length == 1 or
     groups[docker_swarm_managers_group] | length is even
   run_once: yes
 

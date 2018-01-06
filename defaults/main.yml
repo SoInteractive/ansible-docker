@@ -1,5 +1,4 @@
 ---
-docker_hosts_group: docker
 #docker_package: "docker-ce"
 
 docker_users:
