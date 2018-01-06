@@ -9,4 +9,4 @@
   roles:
     - ansible-docker
   vars:
-    docker_monitoring: false
+    docker_metrics: false

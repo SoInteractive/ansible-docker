@@ -39,7 +39,7 @@
 #    - docker_version > 1.12
 
 - include: monitoring.yml
-  when: docker_monitoring
+  when: docker_metrics
 
 - include: portainer.yml
   run_once: yes
