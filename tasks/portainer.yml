@@ -37,6 +37,8 @@
     name: portainer
     image: portainer/portainer:1.15.3
     memory: 512m
+    labels:
+      namespace: management
     ports:
       - "{{ docker_portainer_address }}:{{ docker_portainer_port }}:9000"
     volumes:

@@ -38,7 +38,7 @@
     - docker_swarm_enable
 #    - docker_version > 1.12
 
-- include: monitoring.yml
+- include: metrics.yml
   when: docker_metrics
 
 - include: portainer.yml

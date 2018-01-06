@@ -5,6 +5,8 @@
     image: google/cadvisor:latest
     restart_policy: always
     memory: 512m
+    labels:
+      namespace: management
     ports:
       - 8080:8080
     volumes:
