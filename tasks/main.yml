@@ -41,6 +41,11 @@
 - include: metrics.yml
   when: docker_metrics
 
+- name: Evaluate docker_remote_socket variable
+  set_fact:
+    docker_remote_socket: "{{ docker_remote_socket }}"
+  when: docker_remote_socket != ""
+
 - include: portainer.yml
   run_once: yes
   delegate_to: "{{ ansible_play_hosts[0] }}"
