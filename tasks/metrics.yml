@@ -8,7 +8,7 @@
     labels:
       namespace: management
     ports:
-      - 8080:8080
+      - "{{ docker_metrics_port }}:8080"
     volumes:
       - "/:/rootfs:ro"
       - "/var/run:/var/run:rw"
