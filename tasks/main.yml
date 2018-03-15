@@ -11,14 +11,17 @@
     - always
 
 - include: install.yml
+  become: yes
   tags:
     - install
 
 - include: configure.yml
+  become: yes
 
 - meta: flush_handlers
 
 - name: Enable docker service
+  become: yes
   service:
     name: docker
     state: started

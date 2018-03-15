@@ -1,10 +1,12 @@
 ---
 - name: Ensure portainer data directory exists
+  become: yes
   file:
     path: /opt/portainer
     state: directory
 
 - name: Create portainer endpoint JSON file
+  become: yes
   template:
     src: portainer_endpoints.json.j2
     dest: /opt/portainer/endpoints.json
