@@ -10,3 +10,6 @@
     - ansible-docker
   vars:
     docker_metrics: false
+    docker_configuration:
+      dns: "{{ ansible_dns.nameservers | difference(['127.0.0.1', '127.0.1.1']) }}"
+      storage-driver: "vfs"

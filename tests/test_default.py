@@ -30,8 +30,8 @@ def test_files(host):
             assert f.is_file
 
 
-def test_socket(host):
-    assert host.socket("unix:///var/run/docker.sock").is_listening
+# def test_socket(host):
+#     assert host.socket("unix:///var/run/docker.sock").is_listening
 
 
 def test_service(host):
