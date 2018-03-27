@@ -75,5 +75,8 @@
     name: "{{ docker_package | default('docker-ce') }}"
     state: present
     update_cache: yes
+  register: __ret
+  retries: 10
+  until: __ret is success
   notify:
     - restart docker
