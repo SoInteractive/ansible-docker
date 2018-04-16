@@ -5,6 +5,7 @@
     image: google/cadvisor:latest
     restart_policy: always
     memory: 512m
+    command: "--disable_metrics disk,tcp,udp --housekeeping_interval 5s"
     labels:
       namespace: management
     ports:
