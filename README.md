@@ -8,6 +8,10 @@
 
 This role adds repositories, installs, and configures docker. It can also manage docker containers and install cAdvisor for monitoring purposes.
 
+# :warning: IMPORTANT NOTICE
+
+THIS PROJECT IS ABANDONED. WE DO NOT ACCEPT ANY NEW ISSUES AND/OR PULL REQUESTS.
+
 ## Requirements
 
 - htpasswd installed on deployer host
