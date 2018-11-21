@@ -31,3 +31,6 @@ docker_configuration:
   dns: "{{ ansible_dns.nameservers | difference(['127.0.0.1', '127.0.1.1']) }}"
   data-root: "{{ docker_directory_path }}"
   insecure-registries: "{{ docker_registries | map(attribute='url') | list | default(omit) }}"
+  log-driver: "json-file"
+  log-opts:
+    max-size: "2G"
